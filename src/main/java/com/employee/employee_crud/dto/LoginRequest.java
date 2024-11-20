@@ -10,8 +10,9 @@ public record LoginRequest(
         @Email(message = "Email must be in correct format")
         @JsonProperty("email")
         String email,
+
         @NotBlank(message = "Password is required")
-        @Size(min = 10, max = 50, message = "Invalid password size")
+        @Size(min = 10, max = 15, message = "Password must be at least 10 characters")
         @JsonProperty("password")
         String password
 ) {

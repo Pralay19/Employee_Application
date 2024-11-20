@@ -6,6 +6,7 @@ import lombok.*;
 @Data
 @Getter
 @Setter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -22,21 +23,19 @@ public class Employee {
     private String lastName;
 
     @Column(name = "email", unique = true, nullable = false)
-    private String employeeEmail;
+    private String email;
 
     @Column(name = "title")
     private String title;
 
     @Column(name = "photograph_path")
-    private String photographPath;
+    private String photoPath;
 
-    @Column(name = "department")
-    private String department;
+    @ManyToOne(fetch = FetchType.LAZY) // Many employees can belong to one department
+    @JoinColumn(name = "department", referencedColumnName = "department_id", nullable = false)
+    private Department department;
 
     @Column(name="password", nullable = false)
     private String password;
-
-    @Column(name = "access_token", unique = true)
-    private String accessToken;
 }
 

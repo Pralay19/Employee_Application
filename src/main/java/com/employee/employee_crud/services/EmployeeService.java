@@ -17,7 +17,7 @@ public class EmployeeService {
     private final JWTHelper jwtHelper;
 
     public String loginEmployee(LoginRequest request) {
-        Employee employee=getEmployee(request.email());
+        Employee employee = getEmployee(request.email());
         if(!encryptionService.validates(request.password(), employee.getPassword())){
             return "Invalid Credentials";
         }
