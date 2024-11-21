@@ -10,7 +10,7 @@ import lombok.*;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-public class Department {
+public class Departments {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long department_id;
