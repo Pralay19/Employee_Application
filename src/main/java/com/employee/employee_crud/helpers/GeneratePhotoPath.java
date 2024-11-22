@@ -12,9 +12,9 @@ import java.util.Objects;
 @Service
 @RequiredArgsConstructor
 public class GeneratePhotoPath {
-    private final String IMAGE_UPLOAD_PATH = "C:\\Users\\Pralay Dutta Saw\\Downloads\\ESD_project\\employee_crud\\src\\main\\resources\\static";
-    private final String UPLOAD_DIR = "\\employee_images\\";
-    public String savePhotograph(MultipartFile photograph, String rollNumber) {
+    private final String IMAGE_UPLOAD_PATH ="\\employee_images\\" ;
+    private final String UPLOAD_DIR = "C:\\Users\\Pralay Dutta Saw\\Downloads\\ESD_project\\employee_crud\\src\\main\\resources\\static";
+    public String savePhotograph(MultipartFile photograph, String photoPath) {
         try {
             File uploadDir = new File(UPLOAD_DIR+IMAGE_UPLOAD_PATH);
             if (!uploadDir.exists()) {
@@ -27,7 +27,7 @@ public class GeneratePhotoPath {
                     .substring(photograph.getOriginalFilename()
                             .lastIndexOf(".")
                     );
-            String relativeFilePath = IMAGE_UPLOAD_PATH + rollNumber + fileExtension;
+            String relativeFilePath = IMAGE_UPLOAD_PATH + photoPath + fileExtension;
 
             String absoluteFilePath = UPLOAD_DIR + relativeFilePath;
             photograph.transferTo(new File(absoluteFilePath));

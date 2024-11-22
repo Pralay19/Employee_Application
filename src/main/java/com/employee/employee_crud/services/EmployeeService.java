@@ -19,6 +19,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Objects;
+import java.util.Random;
 
 import static java.lang.String.format;
 
@@ -32,6 +33,7 @@ public class EmployeeService {
     private final DepartmentRepo depo;
     private final EmployeeMapper mapper;
     private final EmployeeIdGenerator idGenerator;
+
 
     public Employee getEmployee(@NotBlank @Email String email) {
         return repo.findByEmail(email)
@@ -81,7 +83,12 @@ public class EmployeeService {
         employee.setDepartment(tempdep);
         employee.setPassword(encryptionService.encode(request.password()));
         employee.setEmployeeId(idGenerator.generateUniqueEmployeeId());
-        employee.setPhotoPath(photoPath);
+        if(!Objects.equals(photoPath, "")) {
+            employee.setPhotoPath(photoPath);
+        }
+        else {
+            employee.setPhotoPath(null);
+        }
         repo.save(employee);
         return employee;
     }
@@ -89,7 +96,7 @@ public class EmployeeService {
 
 
     //UPDATE
-    public Employee updateEmployee(EmployeeRequest request, HttpServletRequest req){
+    public Employee updateEmployee(EmployeeRequest request, HttpServletRequest req,String photoPath){
         if(!jwtHelper.validateAuthorizationHeader(req.getHeader("Authorization"))){
             return null;//INCORRECT TOKEN EXCEPTION TO BE ADDED LATER
         }
@@ -104,10 +111,20 @@ public class EmployeeService {
         }
 
         checkDepartmentCapacity(request.department());
-
+        Departments tempdep= depo.findByName(request.department().getName())
+                .orElseThrow(()->new DepartmentNotFoundException(
+                        "No Department found with provided information."
+                ));
         Employee employee = mapper.toEmployee(request);
+        employee.setDepartment(tempdep);
         if(request.employeeId()!=null) {
             employee.setEmployeeId(request.employeeId());
+        }
+        if(!Objects.equals(photoPath, "") && !Objects.equals(currentEmployee.getPhotoPath(), photoPath)) {
+            employee.setPhotoPath(photoPath);
+        }
+        else {
+            employee.setPhotoPath(null);
         }
         employee.setPassword(encryptionService.encode(request.password()));
         employee.setId((currentEmployee.getId()));
