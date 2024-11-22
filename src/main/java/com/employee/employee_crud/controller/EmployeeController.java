@@ -2,12 +2,17 @@ package com.employee.employee_crud.controller;
 
 
 import com.employee.employee_crud.dto.EmployeeRequest;
+import com.employee.employee_crud.dto.ProfileResponse;
 import com.employee.employee_crud.entity.Employee;
 import com.employee.employee_crud.helpers.GeneratePhotoPath;
+import com.employee.employee_crud.mapper.ProfileMapper;
 import com.employee.employee_crud.services.EmployeeService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Profile;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -16,14 +21,19 @@ import java.util.Random;
 @RestController
 @RequiredArgsConstructor
 @CrossOrigin("*")
-
+@RequestMapping("/iiitb/Employee")
 public class EmployeeController {
     private final EmployeeService employeeService;
     private final GeneratePhotoPath generatepp;
+    private final ProfileMapper profileMapper;
 
     //GET USER
-    @GetMapping("/Employee/{employeeId}")
-    public
+    @GetMapping("/profile/{email}")
+    public ResponseEntity<ProfileResponse> getProfile(@PathVariable String email) {
+        Employee employee = employeeService.getEmployee(email);
+        ProfileResponse profileResponse = profileMapper.toProfileResponse(employee);
+        return ResponseEntity.ok(profileResponse);
+    }
 
 
 

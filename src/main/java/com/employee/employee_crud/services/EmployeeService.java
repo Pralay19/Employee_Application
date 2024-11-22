@@ -41,6 +41,7 @@ public class EmployeeService {
                         format("No Employee found with provided email: %s",email)
                 ));
     }
+
     public Departments getDepartment(@NotBlank String department) {
         return depo.findByName(department)
                 .orElseThrow(()->new DepartmentNotFoundException(
@@ -57,11 +58,13 @@ public class EmployeeService {
             throw new IllegalArgumentException("An employee with this email already exists.");
         }
     }
+
     public void checkIfEmployeeExistsByEmployeeId(@NotBlank @Email String email) {
         if (repo.existsByEmployeeId(email)) {
             throw new IllegalArgumentException("An employee with this EmployeeId already exists.");
         }
     }
+
     public void checkDepartmentCapacity(@NotBlank Departments department) {
         Departments curDepartment = getDepartment(department.getName());
         if(curDepartment.getCapacity()<(curDepartment.getCurrent_capacity()+1)){

@@ -1,12 +1,14 @@
 package com.employee.employee_crud.dto;
 
 import com.employee.employee_crud.entity.Departments;
-import jakarta.validation.constraints.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import lombok.Builder;
 
-
-
-public record EmployeeRequest(
-
+@Builder
+public record ProfileResponse(
         @NotBlank(message = "First name is required")
         @NotEmpty
         @NotNull
@@ -26,12 +28,6 @@ public record EmployeeRequest(
 
         String photoPath,
 
-        Departments department,
-
-        @NotEmpty(message = "Password is required")
-        @NotBlank(message = "Password is required")
-        @Size(min = 5, max = 20, message = "Password must be of 5 to 20 Characters")
-        String password
-
+        Departments department
 ) {
 }
