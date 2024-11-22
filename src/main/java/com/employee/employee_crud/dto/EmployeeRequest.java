@@ -26,6 +26,9 @@ public record EmployeeRequest(
 //        @JsonProperty("title")
         String title,
 
+
+        String employeeId,
+
 //        @JsonProperty("photo_path")
         String photoPath,
 

@@ -13,7 +13,7 @@ public class EmployeeMapper {
                 .email(request.email())
                 .title(request.title())
                 .photoPath(request.photoPath())
-                .department(request.department())
+//                .department(request.department())
                 .password(request.password())
                 .build();
     }

@@ -12,7 +12,7 @@ import java.util.Map;
 
 @Component
 public class JWTHelper {
-    private final String SECRET_KEY = "Pralay Dutta Saw";
+    private final String SECRET_KEY = "pN2D1XlQzF6+KmF5RhPRALAYlUb5bFYd0ZTI7SDf1Co=";
     private final long EXPIRATION_TIME = 1000 * 60 * 60 * 12;
 
     private SecretKey getSigningKey() {

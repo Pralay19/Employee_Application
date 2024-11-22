@@ -13,8 +13,11 @@ import lombok.*;
 @Table(name="employees")
 public class Employee {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long employee_id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+
+    @Column(name = "Employee_id",unique = true, nullable = false)
+    private String employeeId;
 
     @Column(name = "first_name", nullable = false)
     private String firstName;
@@ -31,8 +34,8 @@ public class Employee {
     @Column(name = "photograph_path")
     private String photoPath;
 
-    @ManyToOne(fetch = FetchType.LAZY) // Many employees can belong to one department
-    @JoinColumn(name = "department", referencedColumnName = "department_id")
+    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.PERSIST) // Many employees can belong to one department
+    @JoinColumn(name = "department", referencedColumnName = "depid")
     private Departments department;
 
     @Column(name="password", nullable = false)

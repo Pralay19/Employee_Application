@@ -12,8 +12,11 @@ import lombok.*;
 @AllArgsConstructor
 public class Departments {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long department_id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private int depid;
+
+//    @Column(name = "name", unique=true)
     private String name;
+    private int current_capacity;
     private int capacity;
 }
