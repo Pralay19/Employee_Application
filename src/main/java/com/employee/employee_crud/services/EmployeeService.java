@@ -16,19 +16,14 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.*;
 
 import java.util.Objects;
-import java.util.Optional;
 
 import static java.lang.String.format;
 
 @Service
 @RequiredArgsConstructor
-@RestController
-@CrossOrigin(origins = "*")
 
 public class EmployeeService {
     private final EncryptionService encryptionService;
@@ -74,8 +69,7 @@ public class EmployeeService {
 
 
     //REGISTRATION
-    @PostMapping("/register")
-    public Employee registerEmployee(@RequestBody EmployeeRequest request){
+    public Employee registerEmployee(EmployeeRequest request){
         //FIRST WE NEED TO CHECK IF SAME EMAIL EXITS
         checkIfEmployeeExistsByEmail(request.email());
         checkDepartmentCapacity(request.department());
@@ -88,35 +82,40 @@ public class EmployeeService {
         employee.setPassword(encryptionService.encode(request.password()));
         employee.setEmployeeId(idGenerator.generateUniqueEmployeeId());
         repo.save(employee);
-        return employee;//TO BE MADE TO RETURN STRING ONLY LATER
+        return employee;
     }
 
 
 
     //UPDATE
-    @PostMapping("/updateinfo")
-    public Employee updateEmployee(@RequestBody EmployeeRequest request, HttpServletRequest req){
+    public Employee updateEmployee(EmployeeRequest request, HttpServletRequest req){
         if(!jwtHelper.validateAuthorizationHeader(req.getHeader("Authorization"))){
             return null;//INCORRECT TOKEN EXCEPTION TO BE ADDED LATER
         }
 
         //FIRST CHECK IF ALREADY EXISTS
         Employee currentEmployee = getEmployee(request.email());
-        if (request.employeeId()== null || request.employeeId().isEmpty()) {
-            throw new IllegalArgumentException("Employee ID cannot be null or empty");
-        }
         if(!Objects.equals(currentEmployee.getEmployeeId(), request.employeeId())){
             checkIfEmployeeExistsByEmployeeId(request.employeeId());
         }
+        else if (request.employeeId()== null || request.employeeId().isEmpty()) {
+            throw new IllegalArgumentException("Employee ID cannot be null or empty");
+        }
+
         checkDepartmentCapacity(request.department());
 
         Employee employee = mapper.toEmployee(request);
+        if(request.employeeId()!=null) {
+            employee.setEmployeeId(request.employeeId());
+        }
         employee.setPassword(encryptionService.encode(request.password()));
+        employee.setId((currentEmployee.getId()));
+        System.out.println(employee);
         repo.save(employee);
         return employee;
     }
 
-
+    //Login
     public String loginEmployee(LoginRequest request) {
         Employee employee = getEmployee(request.email());
         if(!encryptionService.validates(request.password(), employee.getPassword())){
