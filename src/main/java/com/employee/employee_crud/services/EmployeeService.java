@@ -69,7 +69,7 @@ public class EmployeeService {
 
 
     //REGISTRATION
-    public Employee registerEmployee(EmployeeRequest request){
+    public Employee registerEmployee(EmployeeRequest request,String photoPath){
         //FIRST WE NEED TO CHECK IF SAME EMAIL EXITS
         checkIfEmployeeExistsByEmail(request.email());
         checkDepartmentCapacity(request.department());
@@ -81,6 +81,7 @@ public class EmployeeService {
         employee.setDepartment(tempdep);
         employee.setPassword(encryptionService.encode(request.password()));
         employee.setEmployeeId(idGenerator.generateUniqueEmployeeId());
+        employee.setPhotoPath(photoPath);
         repo.save(employee);
         return employee;
     }
