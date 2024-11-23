@@ -14,10 +14,10 @@ public record EmployeeRequest(
 
         String lastName,
 
-        @NotBlank
-        @NotNull
-        @NotEmpty
-        @Email(message = "Email must be in correct format")
+//        @NotBlank
+//        @NotNull
+//        @NotEmpty
+//        @Email(message = "Email must be in correct format")
         String email,
 
         String title,

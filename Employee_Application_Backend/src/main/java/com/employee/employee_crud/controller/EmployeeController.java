@@ -39,7 +39,7 @@ public class EmployeeController {
 
     //REGISTRATION
     @PostMapping(consumes = "multipart/form-data", path = "/register")
-    public Employee register(@RequestPart("photo") MultipartFile photo, @RequestPart("data")@Valid EmployeeRequest request) {
+    public String register(@RequestPart("photo") MultipartFile photo, @RequestPart("data")@Valid EmployeeRequest request) {
 
 
         Random rand = new Random();
@@ -49,7 +49,7 @@ public class EmployeeController {
 
         Employee employee = employeeService.registerEmployee(request,photoPath);
 
-        return employee;
+        return employee.getEmail();
     }
 
     //UPDATE

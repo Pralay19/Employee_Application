@@ -8,6 +8,7 @@ import com.employee.employee_crud.entity.Departments;
 import com.employee.employee_crud.entity.Employee;
 import com.employee.employee_crud.helpers.EmployeeIdGenerator;
 import com.employee.employee_crud.helpers.EncryptionService;
+import com.employee.employee_crud.helpers.GenerateEmail;
 import com.employee.employee_crud.helpers.JWTHelper;
 import com.employee.employee_crud.mapper.EmployeeMapper;
 import com.employee.employee_crud.repo.DepartmentRepo;
@@ -19,7 +20,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Objects;
-import java.util.Random;
 
 import static java.lang.String.format;
 
@@ -33,7 +33,7 @@ public class EmployeeService {
     private final DepartmentRepo depo;
     private final EmployeeMapper mapper;
     private final EmployeeIdGenerator idGenerator;
-
+    private final GenerateEmail generateEmail;
 
     public Employee getEmployee(@NotBlank @Email String email) {
         return repo.findByEmail(email)
@@ -75,8 +75,7 @@ public class EmployeeService {
 
     //REGISTRATION
     public Employee registerEmployee(EmployeeRequest request,String photoPath){
-        //FIRST WE NEED TO CHECK IF SAME EMAIL EXITS
-        checkIfEmployeeExistsByEmail(request.email());
+        //FIRST WE NEED TO CHECK CAPACITY
         checkDepartmentCapacity(request.department());
         Departments tempdep= depo.findByName(request.department().getName())
                 .orElseThrow(()->new DepartmentNotFoundException(
@@ -92,7 +91,10 @@ public class EmployeeService {
         else {
             employee.setPhotoPath(null);
         }
+        employee.setEmail(generateEmail.generateUniqueEmail(employee.getFirstName(),employee.getLastName()));
         repo.save(employee);
+        tempdep.setCurrent_capacity(tempdep.getCurrent_capacity()+1);
+        depo.save(tempdep);
         return employee;
     }
 

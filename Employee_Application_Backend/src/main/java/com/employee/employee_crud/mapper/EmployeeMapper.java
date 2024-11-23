@@ -10,7 +10,7 @@ public class EmployeeMapper {
         return Employee.builder()
                 .firstName(request.firstName())
                 .lastName(request.lastName())
-                .email(request.email())
+//                .email(request.email())
                 .title(request.title())
 //                .photoPath(request.photoPath())
 //                .department(request.department())
