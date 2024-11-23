@@ -43,7 +43,7 @@ public class EmployeeController {
 
 
         Random rand = new Random();
-        String photoname = String.valueOf(1000+rand.nextInt());
+        String photoname = String.valueOf(1000+rand.nextInt(1000));
         String photoPath = "";
         if(photo!=null)  photoPath = generatepp.savePhotograph(photo,photoname);
 
