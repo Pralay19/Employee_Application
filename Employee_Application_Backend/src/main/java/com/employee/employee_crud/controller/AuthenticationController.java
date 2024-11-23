@@ -22,17 +22,19 @@ public class AuthenticationController {
     private final JWTHelper jwtHelper;
 
     @PostMapping("/login")
-    public ResponseEntity<Void> login(@RequestBody LoginRequest request) {
-        try {
-            String token = employeeService.loginEmployee(request);
-            String email = jwtHelper.extractEmail(token);
-            HttpHeaders headers = new HttpHeaders();
-            headers.setLocation(URI.create("/iiitb/Employee/profile/" + email));
-            headers.set("Authorization", "Bearer " + token);
-
-            return new ResponseEntity<>(headers, HttpStatus.SEE_OTHER);
-        } catch (ResponseStatusException ex) {
-            return new ResponseEntity<Void>(HttpStatus.UNAUTHORIZED);
-        }
+    public ResponseEntity<String> login(@RequestBody LoginRequest request) {
+//        try {
+//            String token = employeeService.loginEmployee(request);
+//            String email = jwtHelper.extractEmail(token);
+//            HttpHeaders headers = new HttpHeaders();
+//            headers.setLocation(URI.create("/iiitb/Employee/profile/" + email));
+//            headers.set("Authorization", "Bearer " + token);
+//
+//            return new ResponseEntity<>(headers, HttpStatus.SEE_OTHER);
+//        } catch (ResponseStatusException ex) {
+//            return new ResponseEntity<Void>(HttpStatus.UNAUTHORIZED);
+//        }
+        String token = employeeService.loginEmployee(request);
+        return ResponseEntity.ok(token);
     }
 }
