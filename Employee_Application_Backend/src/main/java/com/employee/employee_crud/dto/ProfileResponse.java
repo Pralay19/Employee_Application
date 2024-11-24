@@ -22,12 +22,14 @@ public record ProfileResponse(
         @Email(message = "Email must be in correct format")
         String email,
 
+        String password,
+
         String title,
 
         String employeeId,
 
         String photoPath,
 
-        Departments department
+        String department
 ) {
 }

@@ -26,7 +26,7 @@ public record EmployeeRequest(
 
         String photoPath,
 
-        Departments department,
+        String department,
 
         @NotEmpty(message = "Password is required")
         @NotBlank(message = "Password is required")

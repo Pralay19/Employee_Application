@@ -65,8 +65,8 @@ public class EmployeeService {
         }
     }
 
-    public void checkDepartmentCapacity(@NotBlank Departments department) {
-        Departments curDepartment = getDepartment(department.getName());
+    public void checkDepartmentCapacity(@NotBlank String department) {
+        Departments curDepartment = getDepartment(department);
         if(curDepartment.getCapacity()<(curDepartment.getCurrent_capacity()+1)){
             throw new IllegalArgumentException("Department capacity exceeds current capacity.");
         }
@@ -77,7 +77,7 @@ public class EmployeeService {
     public Employee registerEmployee(EmployeeRequest request,String photoPath){
         //FIRST WE NEED TO CHECK CAPACITY
         checkDepartmentCapacity(request.department());
-        Departments tempdep= depo.findByName(request.department().getName())
+        Departments tempdep= depo.findByName(request.department())
                 .orElseThrow(()->new DepartmentNotFoundException(
                         "No Department found with provided information."
                 ));
@@ -116,7 +116,7 @@ public class EmployeeService {
         }
 
         checkDepartmentCapacity(request.department());
-        Departments tempdep= depo.findByName(request.department().getName())
+        Departments tempdep= depo.findByName(request.department())
                 .orElseThrow(()->new DepartmentNotFoundException(
                         "No Department found with provided information."
                 ));
@@ -133,7 +133,6 @@ public class EmployeeService {
         }
         employee.setPassword(encryptionService.encode(request.password()));
         employee.setId((currentEmployee.getId()));
-        System.out.println(employee);
         repo.save(employee);
         return employee;
     }

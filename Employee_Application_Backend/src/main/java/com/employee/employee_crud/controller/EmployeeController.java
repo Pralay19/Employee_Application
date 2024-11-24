@@ -53,7 +53,7 @@ public class EmployeeController {
     }
 
     //UPDATE
-    @PostMapping("/updateinfo")
+    @PostMapping("/Profile/updateinfo")
     public void updateinfo(@RequestPart("photo") MultipartFile photo,@RequestPart("data") EmployeeRequest request,HttpServletRequest req) {
 
         Random rand = new Random();

@@ -5,13 +5,9 @@ import com.employee.employee_crud.dto.LoginRequest;
 import com.employee.employee_crud.helpers.JWTHelper;
 import com.employee.employee_crud.services.EmployeeService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
-import java.net.URI;
 
 @RestController
 @RequiredArgsConstructor

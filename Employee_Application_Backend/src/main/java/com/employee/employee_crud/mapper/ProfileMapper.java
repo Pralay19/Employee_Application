@@ -14,7 +14,7 @@ public class ProfileMapper {
                 .email(employee.getEmail())
                 .title(employee.getTitle())
                 .photoPath(employee.getPhotoPath())
-                .department(employee.getDepartment())
+                .department(employee.getDepartment().getName())
                 .build();
     }
 }

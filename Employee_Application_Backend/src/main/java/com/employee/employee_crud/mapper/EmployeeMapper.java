@@ -14,7 +14,7 @@ public class EmployeeMapper {
                 .title(request.title())
 //                .photoPath(request.photoPath())
 //                .department(request.department())
-                .password(request.password())
+//                .password(request.password())
                 .build();
     }
 }
