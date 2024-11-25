@@ -76,6 +76,7 @@ public class EmployeeService {
     //REGISTRATION
     public Employee registerEmployee(EmployeeRequest request,String photoPath){
         //FIRST WE NEED TO CHECK CAPACITY
+        System.out.println(request.department());
         checkDepartmentCapacity(request.department());
         Departments tempdep= depo.findByName(request.department())
                 .orElseThrow(()->new DepartmentNotFoundException(
@@ -118,14 +119,23 @@ public class EmployeeService {
         else if (request.employeeId()== null || request.employeeId().isEmpty()) {
             throw new IllegalArgumentException("Employee ID cannot be null or empty");
         }
-
-        checkDepartmentCapacity(request.department());
         Departments tempdep= depo.findByName(request.department())
                 .orElseThrow(()->new DepartmentNotFoundException(
                         "No Department found with provided information."
                 ));
+        Departments prevdep= depo.findByName(currentEmployee.getDepartment().getName())
+                .orElseThrow(()->new DepartmentNotFoundException(
+                        "No Department found with provided information."
+                ));
         Employee employee = mapper.toEmployee(request);
-        employee.setDepartment(tempdep);
+
+        if(!Objects.equals(request.department(), currentEmployee.getDepartment().getName())){
+            checkDepartmentCapacity(request.department());
+            prevdep.setCurrent_capacity(prevdep.getCurrent_capacity()-1);
+            tempdep.setCurrent_capacity(tempdep.getCurrent_capacity()+1);
+            depo.save(tempdep);
+            depo.save(prevdep);
+        }
         if(request.employeeId()!=null) {
             employee.setEmployeeId(request.employeeId());
         }
@@ -137,6 +147,7 @@ public class EmployeeService {
         }
         if(request.password()!=null)employee.setPassword(encryptionService.encode(request.password()));
         else employee.setPassword(currentEmployee.getPassword());
+        employee.setDepartment(tempdep);
         employee.setId((currentEmployee.getId()));
         employee.setEmail(currentEmployee.getEmail());
         repo.save(employee);

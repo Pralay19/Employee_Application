@@ -17,6 +17,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 @RestController
@@ -44,7 +46,7 @@ public class EmployeeController {
 
     //REGISTRATION
     @PostMapping(consumes = "multipart/form-data", path = "/register")
-    public String register(@RequestPart("photo") MultipartFile photo, @RequestPart("data")@Valid EmployeeRequest request) {
+    public Map<String,String> register(@RequestPart(name="photo",required = false) MultipartFile photo, @RequestPart("data") EmployeeRequest request) {
 
 
         Random rand = new Random();
@@ -53,13 +55,15 @@ public class EmployeeController {
         if(photo!=null)  photoPath = generatepp.savePhotograph(photo,photoname);
 
         Employee employee = employeeService.registerEmployee(request,photoPath);
-
-        return employee.getEmail();
+        Map<String,String> response = new HashMap<>();
+        response.put("email",employee.getEmail());
+//        return employee.getEmail();
+        return response;
     }
 
     //UPDATE
     @PostMapping("/Profile/updateinfo")
-    public void updateinfo(@RequestPart("photo") MultipartFile photo,@RequestPart("data") EmployeeRequest request,HttpServletRequest req) {
+    public void updateinfo(@RequestPart(name="photo",required = false) MultipartFile photo,@RequestPart("data") EmployeeRequest request,HttpServletRequest req) {
 
         Random rand = new Random();
         String photoname = String.valueOf(1000+rand.nextInt());
