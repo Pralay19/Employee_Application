@@ -102,10 +102,15 @@ public class EmployeeService {
 
     //UPDATE
     public Employee updateEmployee(EmployeeRequest request, HttpServletRequest req,String photoPath){
+
+        System.out.println("----------"+req.getHeader("Authorization"));
         if(!jwtHelper.validateAuthorizationHeader(req.getHeader("Authorization"))){
             return null;//INCORRECT TOKEN EXCEPTION TO BE ADDED LATER
         }
-
+        //CHECKING WHAT DATA IS COMMING.
+        System.out.println("---------------------------");
+        System.out.println("RECIEVED REQUEST: "+request);
+        System.out.println("---------------------------");
         //FIRST CHECK IF ALREADY EXISTS
         Employee currentEmployee = getEmployee(request.email());
         if(!Objects.equals(currentEmployee.getEmployeeId(), request.employeeId())){
@@ -140,6 +145,7 @@ public class EmployeeService {
     //Login
     public String loginEmployee(LoginRequest request) {
         Employee employee = getEmployee(request.email());
+        System.out.println(employee);
         if(!encryptionService.validates(request.password(), employee.getPassword())){
             return "Invalid Credentials";
         }

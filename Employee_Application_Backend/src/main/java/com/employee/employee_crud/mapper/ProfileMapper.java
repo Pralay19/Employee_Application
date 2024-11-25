@@ -11,6 +11,7 @@ public class ProfileMapper {
         return ProfileResponse.builder()
                 .firstName(employee.getFirstName())
                 .lastName(employee.getLastName())
+                .employeeId(employee.getEmployeeId())
                 .email(employee.getEmail())
                 .title(employee.getTitle())
                 .photoPath(employee.getPhotoPath())

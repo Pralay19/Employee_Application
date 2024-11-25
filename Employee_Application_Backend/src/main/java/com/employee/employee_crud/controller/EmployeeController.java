@@ -5,6 +5,7 @@ import com.employee.employee_crud.dto.EmployeeRequest;
 import com.employee.employee_crud.dto.ProfileResponse;
 import com.employee.employee_crud.entity.Employee;
 import com.employee.employee_crud.helpers.GeneratePhotoPath;
+import com.employee.employee_crud.helpers.JWTHelper;
 import com.employee.employee_crud.mapper.ProfileMapper;
 import com.employee.employee_crud.services.EmployeeService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -26,10 +27,14 @@ public class EmployeeController {
     private final EmployeeService employeeService;
     private final GeneratePhotoPath generatepp;
     private final ProfileMapper profileMapper;
+    private final JWTHelper jwtHelper;
 
     //GET USER
     @GetMapping("/profile/{email}")
-    public ResponseEntity<ProfileResponse> getProfile(@PathVariable String email) {
+    public ResponseEntity<ProfileResponse> getProfile(@PathVariable String email,HttpServletRequest req) {
+        if(!jwtHelper.validateAuthorizationHeader(req.getHeader("Authorization"))){
+            return null;//INCORRECT TOKEN EXCEPTION TO BE ADDED LATER
+        }
         Employee employee = employeeService.getEmployee(email);
         ProfileResponse profileResponse = profileMapper.toProfileResponse(employee);
         return ResponseEntity.ok(profileResponse);

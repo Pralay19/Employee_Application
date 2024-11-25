@@ -31,6 +31,7 @@ public class AuthenticationController {
 //            return new ResponseEntity<Void>(HttpStatus.UNAUTHORIZED);
 //        }
         String token = employeeService.loginEmployee(request);
+        System.out.println(token);
         return ResponseEntity.ok(token);
     }
 }

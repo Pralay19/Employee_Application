@@ -16,9 +16,7 @@ public record ProfileResponse(
 
         String lastName,
 
-        @NotBlank
-        @NotNull
-        @NotEmpty
+
         @Email(message = "Email must be in correct format")
         String email,
 
@@ -26,6 +24,9 @@ public record ProfileResponse(
 
         String title,
 
+        @NotBlank(message = "First name is required")
+        @NotEmpty
+        @NotNull
         String employeeId,
 
         String photoPath,
