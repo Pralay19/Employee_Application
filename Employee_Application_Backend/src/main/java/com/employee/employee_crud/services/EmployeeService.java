@@ -103,14 +103,13 @@ public class EmployeeService {
     //UPDATE
     public Employee updateEmployee(EmployeeRequest request, HttpServletRequest req,String photoPath){
 
-        System.out.println("----------"+req.getHeader("Authorization"));
         if(!jwtHelper.validateAuthorizationHeader(req.getHeader("Authorization"))){
             return null;//INCORRECT TOKEN EXCEPTION TO BE ADDED LATER
         }
-        //CHECKING WHAT DATA IS COMMING.
-        System.out.println("---------------------------");
-        System.out.println("RECIEVED REQUEST: "+request);
-        System.out.println("---------------------------");
+//        //CHECKING WHAT DATA IS COMMING.
+//        System.out.println("---------------------------");
+//        System.out.println("RECIEVED REQUEST: "+request);
+//        System.out.println("---------------------------");
         //FIRST CHECK IF ALREADY EXISTS
         Employee currentEmployee = getEmployee(request.email());
         if(!Objects.equals(currentEmployee.getEmployeeId(), request.employeeId())){
@@ -136,8 +135,10 @@ public class EmployeeService {
         else {
             employee.setPhotoPath(null);
         }
-        employee.setPassword(encryptionService.encode(request.password()));
+        if(request.password()!=null)employee.setPassword(encryptionService.encode(request.password()));
+        else employee.setPassword(currentEmployee.getPassword());
         employee.setId((currentEmployee.getId()));
+        employee.setEmail(currentEmployee.getEmail());
         repo.save(employee);
         return employee;
     }
