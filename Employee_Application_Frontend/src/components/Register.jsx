@@ -26,7 +26,9 @@ function Register() {
       console.log('Navigating to Login with state:', generatedEmail);
       const token=response.data.token;
       localStorage.setItem('token', token.trim());
-      navigate(`/iiitb/Employee/Profile/${generatedEmail}`,{state:{email:formData.email}});
+      navigate(`/iiitb/Employee/Profile/${generatedEmail}`);
+      //Here i was first going to the login page after the registration process and was saving the email state,
+      //but didn't work out and hence i made it to go directly to the profile page after registration.
     } catch (error) {
       alert('Registration failed');
       console.error(error);

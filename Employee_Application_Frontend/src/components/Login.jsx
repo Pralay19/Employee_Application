@@ -9,11 +9,12 @@ function Login() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  useEffect(()=>{
-    if(location.state && location.state.email){
-      setEmail(location.state.email);
-    }
-  },[location.state]);
+  // useEffect(()=>{
+  //   if(location.state && location.state.email){
+  //     setEmail(location.state.email);
+  //   }
+  // },[location.state]);
+  //Because of this piece of "code" i was unable to login even when the password was correct.
 
   const handleLogin = async () => {
     try {
