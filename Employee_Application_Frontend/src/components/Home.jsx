@@ -6,7 +6,7 @@ function Home() {
   const navigate = useNavigate();
 
   return (
-    <div>
+    <div className='container'>
       <h1>Employee Management</h1>
       <button onClick={() => navigate('/iiitb/Employee/Register')}>Register</button>
       <button onClick={() => navigate('/iiitb/Employee/Login')}>Login</button>
