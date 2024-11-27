@@ -2,6 +2,7 @@
 import React, { useEffect,useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { loginEmployee } from '../httputils/employeeApi';
+import '../styles/login.css'
 
 function Login() {
   const [email, setEmail] = useState('');
@@ -27,15 +28,13 @@ function Login() {
       alert('Login failed. Please check credentials');
       console.log(location.state.email);
       console.error(error);
-      setPassword('');
-      setEmail('');
-      navigate('/iiitb/Employee/Login', { replace: true });
+      navigate('/iiitb/Employee');
     }
   };
 
   return (
-    <div className='container'>
-      <h2>Login</h2>
+    <div className='container-login'>
+      <h2>Welcome to Employee Login</h2>
 
       <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
       <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />

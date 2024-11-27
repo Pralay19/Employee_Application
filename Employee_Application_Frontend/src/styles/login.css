@@ -1,0 +1,85 @@
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(135deg, #74ebd5, #acb6e5);
+    background-image: url("https://images.unsplash.com/photo-1732115234692-3ee71d5363af?q=80&w=1854&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+
+    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  .container-login {
+    background: #ffffff;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+    max-width: 400px;
+    width: 100%;
+    text-align: center;
+    box-sizing: border-box;
+  }
+  
+  .container-login h2 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: #2c3e50;
+  }
+  
+  .container-login input {
+    width: 100%;
+    padding: 12px 15px;
+    margin: 15px 0;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    font-size: 1rem;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .container-login input:focus {
+    border-color: #3498db;
+    box-shadow: 0 0 8px rgba(52, 152, 219, 0.5);
+    outline: none;
+  }
+  
+  .container-login button {
+    width: 100%;
+    padding: 12px 20px;
+    margin-top: 20px;
+    background: linear-gradient(135deg, #3498db, #2980b9);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease;
+  }
+  
+  .container-login button:hover {
+    background: linear-gradient(135deg, #2980b9, #2471a3);
+    transform: translateY(-3px);
+  }
+  
+  .container-login button:focus {
+    outline: 2px solid #3498db;
+  }
+  
+  @media (max-width: 500px) {
+    .container-login {
+      padding: 25px;
+    }
+  
+    .container-login h2 {
+      font-size: 1.5rem;
+    }
+  
+    .container-login button {
+      font-size: 0.9rem;
+      padding: 12px;
+    }
+  }
+  

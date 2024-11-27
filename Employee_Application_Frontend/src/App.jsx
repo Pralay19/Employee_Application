@@ -6,19 +6,22 @@ import Login from './components/Login';
 import Register from './components/Register';
 import Profile from './components/Profile';
 import UpdateProfile from './components/UpdateProfile';
+import './App.css'
 
 
 function App(){
   return (
-    <Router>
-    <Routes>
-      <Route path="/iiitb/Employee" element={<Home />} />
-      <Route path="/iiitb/Employee/Login" element={<Login />} />
-      <Route path="/iiitb/Employee/Register" element={<Register />} />
-      <Route path="/iiitb/Employee/Profile/:email" element={<Profile />} />
-      <Route path="/iiitb/Employee/:email/updateinfo" element={<UpdateProfile />} />
-    </Routes>
-  </Router>
+    <div className='app-bg'>
+      <Router>
+      <Routes>
+        <Route path="/iiitb/Employee" element={<Home />} />
+        <Route path="/iiitb/Employee/Login" element={<Login />} />
+        <Route path="/iiitb/Employee/Register" element={<Register />} />
+        <Route path="/iiitb/Employee/Profile/:email" element={<Profile />} />
+        <Route path="/iiitb/Employee/:email/updateinfo" element={<UpdateProfile />} />
+      </Routes>
+    </Router>
+    </div>
   );
 }
 
