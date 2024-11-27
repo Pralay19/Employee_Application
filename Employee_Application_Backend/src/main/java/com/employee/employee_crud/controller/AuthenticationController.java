@@ -11,11 +11,10 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "http://localhost:5173")
 @RequestMapping("/iiitb/Employee")
 public class AuthenticationController {
     private final EmployeeService employeeService;
-    private final JWTHelper jwtHelper;
 
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody LoginRequest request) {

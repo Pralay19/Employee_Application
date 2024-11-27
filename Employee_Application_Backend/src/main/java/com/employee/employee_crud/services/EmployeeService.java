@@ -143,7 +143,7 @@ public class EmployeeService {
             employee.setPhotoPath(photoPath);
         }
         else {
-            employee.setPhotoPath(null);
+            employee.setPhotoPath(currentEmployee.getPhotoPath());
         }
         if(request.password()!=null)employee.setPassword(encryptionService.encode(request.password()));
         else employee.setPassword(currentEmployee.getPassword());

@@ -13,7 +13,7 @@ import java.util.Objects;
 @RequiredArgsConstructor
 public class GeneratePhotoPath {
     private final String IMAGE_UPLOAD_PATH ="\\employee_images\\" ;
-    private final String UPLOAD_DIR = "C:\\Users\\Pralay Dutta Saw\\Downloads\\ESD_project\\employee_crud\\src\\main\\resources\\static";
+    private final String UPLOAD_DIR = "C:\\Users\\Pralay Dutta Saw\\Downloads\\ESD_project\\Employee_Application\\Employee_Application_Backend\\src\\main\\resources\\static";
     public String savePhotograph(MultipartFile photograph, String photoPath) {
         try {
             File uploadDir = new File(UPLOAD_DIR+IMAGE_UPLOAD_PATH);

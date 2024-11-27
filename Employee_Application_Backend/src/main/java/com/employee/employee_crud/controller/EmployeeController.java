@@ -9,10 +9,7 @@ import com.employee.employee_crud.helpers.JWTHelper;
 import com.employee.employee_crud.mapper.ProfileMapper;
 import com.employee.employee_crud.services.EmployeeService;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.annotation.Profile;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -23,7 +20,7 @@ import java.util.Random;
 
 @RestController
 @RequiredArgsConstructor
-@CrossOrigin("*")
+@CrossOrigin(origins = "http://localhost:5173")
 @RequestMapping("/iiitb/Employee")
 public class EmployeeController {
     private final EmployeeService employeeService;
@@ -53,10 +50,13 @@ public class EmployeeController {
         String photoname = String.valueOf(1000+rand.nextInt(1000));
         String photoPath = "";
         if(photo!=null)  photoPath = generatepp.savePhotograph(photo,photoname);
+        System.out.println(photoPath);
 
         Employee employee = employeeService.registerEmployee(request,photoPath);
         Map<String,String> response = new HashMap<>();
         response.put("email",employee.getEmail());
+        jwtHelper.generateToken(employee.getEmail());
+        response.put("token",jwtHelper.generateToken(employee.getEmail()));
 //        return employee.getEmail();
         return response;
     }
