@@ -2,6 +2,7 @@ package com.employee.employee_crud.services;
 
 import com.employee.employee_crud.Exceptions.DepartmentNotFoundException;
 import com.employee.employee_crud.Exceptions.EmployeeNotFoundException;
+import com.employee.employee_crud.Exceptions.InvalidCredentialsException;
 import com.employee.employee_crud.dto.EmployeeRequest;
 import com.employee.employee_crud.dto.LoginRequest;
 import com.employee.employee_crud.entity.Departments;
@@ -159,7 +160,7 @@ public class EmployeeService {
         Employee employee = getEmployee(request.email());
         System.out.println(employee);
         if(!encryptionService.validates(request.password(), employee.getPassword())){
-            return "Invalid Credentials";
+            throw new InvalidCredentialsException("Invalid Credentials");
         }
         return jwtHelper.generateToken(request.email());
     }
